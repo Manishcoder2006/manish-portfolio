@@ -1,0 +1,86 @@
+import type { AiNewsArticle } from "./types";
+import { canonicalizeUrl, generateContentHash, slugify } from "./utils";
+
+const rawSeedStories = [
+  {
+    title: "Google DeepMind Unveils Next-Gen Gemini 2.5 Flash with Real-Time Multimodal Reasoning",
+    summary: "Google DeepMind has introduced Gemini 2.5 Flash, an upgraded multimodal model engineered for low-latency reasoning and live search-grounded capabilities. The model showcases significant improvements in mathematical comprehension, multilingual coding benchmarks, and multi-turn audio-visual agent interactions while cutting inference compute footprint in half.",
+    why_it_matters: "Enables developers to build real-time agentic applications, live coding copilots, and voice assistants at a fraction of previous serving costs with integrated search grounding.",
+    source_name: "Google DeepMind",
+    source_url: "https://deepmind.google/technologies/gemini/",
+    image_url: null,
+    category: "AI Models and LLMs" as const,
+    published_at: "2026-10-29T02:00:00.000Z",
+    relevance_score: 98,
+    is_featured: true,
+  },
+  {
+    title: "Anthropic Releases Claude Computer Use API in General Availability with Enhanced Sandboxing",
+    summary: "Anthropic has moved its Computer Use API to General Availability, allowing AI agents to navigate desktop interfaces, interact with web browsers, read screens, and execute shell commands inside secure sandboxes. Benchmark evaluations show a 40% reduction in interaction errors and robust prompt-injection defenses.",
+    why_it_matters: "Allows AI engineers to automate end-to-end testing, legacy software operations, and desktop workflows through autonomous agents without specialized API integrations.",
+    source_name: "Anthropic",
+    source_url: "https://www.anthropic.com/news",
+    image_url: null,
+    category: "AI Agents" as const,
+    published_at: "2026-10-28T23:00:00.000Z",
+    relevance_score: 95,
+    is_featured: false,
+  },
+  {
+    title: "OpenAI Announces Operator Framework for Multi-Step Autonomous Developer Workflows",
+    summary: "OpenAI has officially debuted Operator, an agentic framework designed to perform complex research and multi-step browser tasks autonomously. The architecture leverages chain-of-thought verification, allowing agents to recover from transient website errors, manage credentials securely, and produce transparent execution traces.",
+    why_it_matters: "Shifts agent development from simple chat prompts to deterministic, resilient workflows that can complete multi-hour browser research and operational tasks independently.",
+    source_name: "OpenAI",
+    source_url: "https://openai.com/news/",
+    image_url: null,
+    category: "AI Tools and Developer Platforms" as const,
+    published_at: "2026-10-28T19:00:00.000Z",
+    relevance_score: 94,
+    is_featured: false,
+  },
+  {
+    title: "NVIDIA Introduces Blackwell Ultra Architecture Accelerating 10M+ Token Context Windows",
+    summary: "NVIDIA revealed its next-generation Blackwell Ultra GPU architecture, delivering 4x higher FP4 inference throughput and specialized hardware decompilation for multi-million token context retrieval. The platform targets trillion-parameter reasoning models and autonomous robotics simulations in enterprise datacenters.",
+    why_it_matters: "Slashes the latency of long-context RAG pipelines and large agent teams, making interactive real-time processing of codebases with millions of lines feasible.",
+    source_name: "NVIDIA",
+    source_url: "https://nvidianews.nvidia.com/",
+    image_url: null,
+    category: "AI Industry and Funding" as const,
+    published_at: "2026-10-28T15:00:00.000Z",
+    relevance_score: 91,
+    is_featured: false,
+  },
+  {
+    title: "Meta AI Open-Sources Llama Vision 4 with On-Device Edge Quantization for Mobile Developers",
+    summary: "Meta AI has released open weights and quantization kernels for Llama Vision 4, offering full multimodal capabilities directly on consumer hardware and modern smartphones. The release includes native bindings for PyTorch ExecuTorch, WebGPU, and Apple Silicon Metal with zero cloud dependency.",
+    why_it_matters: "Allows engineers and students to build private, zero-latency on-device vision and voice AI apps that run entirely offline without recurring API fees.",
+    source_name: "Meta AI",
+    source_url: "https://ai.meta.com/blog/",
+    image_url: null,
+    category: "AI Research" as const,
+    published_at: "2026-10-28T11:00:00.000Z",
+    relevance_score: 89,
+    is_featured: false,
+  },
+];
+
+export const INITIAL_SEED_ARTICLES: AiNewsArticle[] = rawSeedStories.map((story, index) => {
+  const canonicalUrl = canonicalizeUrl(story.source_url);
+  return {
+    id: `seed-story-${index + 1}`,
+    title: story.title,
+    slug: slugify(story.title),
+    summary: story.summary,
+    why_it_matters: story.why_it_matters,
+    source_name: story.source_name,
+    source_url: canonicalUrl,
+    image_url: story.image_url,
+    category: story.category,
+    published_at: story.published_at,
+    fetched_at: "2026-10-29T02:30:00.000Z",
+    relevance_score: story.relevance_score,
+    is_featured: story.is_featured,
+    content_hash: generateContentHash(story.title, canonicalUrl),
+    status: "published" as const,
+  };
+});
