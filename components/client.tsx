@@ -77,15 +77,14 @@ export function Navigation({ links }: { links: readonly NavLink[] }) {
   );
 }
 
-const CONTACT_SUCCESS ="Thank you for your message.";
-const CONTACT_ERROR ="Please add your name, a valid email and a few words about your message.";
-const CONTACT_SENDING ="Sending…";
-const CONTACT_FAILED = `Sorry, your message did not go through. Please try again, or write to ${contactEmail}.`;
+const CONTACT_SUCCESS = "Thank you! Your message has been sent successfully. I'll get back to you shortly.";
+const CONTACT_ERROR = "Please provide your name, a valid email address, and a message.";
+const CONTACT_SENDING = "Sending message…";
+const CONTACT_FAILED = `Sorry, your message could not be delivered. Please try again or email directly to ${contactEmail}.`;
 
 /**
- * Contact form. It checks the fields in the browser, then posts them to FormSubmit (formsubmit.co),
- * which emails every message to `contactEmail`. The first message ever sent makes FormSubmit mail a
- * one-time activation link to that address: click it once and later messages arrive normally.
+ * Contact form with server-side /api/contact integration delivering directly to
+ * manavgupta236@gmail.com with validation, spam prevention and loading states.
  */
 export function ContactForm() {
   const [status, setStatus] = useState("");
@@ -93,28 +92,52 @@ export function ContactForm() {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (sending) return;
+
     const form = event.currentTarget;
     if (!form.checkValidity()) {
       setStatus(CONTACT_ERROR);
       form.querySelector<HTMLElement>(":invalid")?.focus();
       return;
     }
-    // A hidden field that people leave empty and bots fill in: FormSubmit drops those messages.
-    if (new FormData(form).get("_honey")) return;
+
+    const formData = new FormData(form);
+    if (formData.get("_honey")) return;
+
+    const payload = {
+      name: String(formData.get("name") || "").trim(),
+      email: String(formData.get("email") || "").trim(),
+      subject: String(formData.get("subject") || "").trim() || "Project Collaboration",
+      topic: String(formData.get("topic") || "").trim() || "General Inquiry",
+      message: String(formData.get("message") || "").trim(),
+      _honey: String(formData.get("_honey") || ""),
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      setStatus(CONTACT_ERROR);
+      return;
+    }
+
     setSending(true);
     setStatus(CONTACT_SENDING);
+
     try {
-      const body = new FormData(form);
-      const subject = (form.elements.namedItem("subject") as HTMLInputElement)?.value;
-      body.append("_subject", subject ? `Portfolio Inquiry: ${subject}` : "New message from Manav Gupta's Portfolio");
-      body.append("_template", "table");
-      body.append("_captcha", "false");
-      const response = await fetch(`https://formsubmit.co/ajax/${contactEmail}`, { method: "POST", headers: { Accept: "application/json" }, body });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok || String(result.success) !== "true") throw new Error("Form service refused the message");
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to deliver message");
+      }
+
       setStatus(CONTACT_SUCCESS);
       form.reset();
-    } catch {
+    } catch (err) {
+      console.error("Submission failed:", err);
       setStatus(CONTACT_FAILED);
     } finally {
       setSending(false);

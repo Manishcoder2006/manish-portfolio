@@ -202,18 +202,29 @@ function Hero() {
           <p className="max-w-[540px] font-body text-base sm:text-lg md:text-[19px] font-normal leading-[1.65] text-paper/85">
             I build AI-powered web and mobile products, and also work as a freelancer helping individuals and startups turn their ideas into real solutions.
           </p>
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center gap-3.5 sm:gap-4 pt-2">
             <a
               href="#capabilities"
               className="inline-flex items-center justify-center rounded-pill bg-gradient-to-r from-amber via-flame to-[#f06018] px-7 py-3.5 font-body text-base font-bold text-ink shadow-[0_4px_20px_rgba(245,135,26,0.35)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_6px_28px_rgba(245,135,26,0.5)] active:scale-[0.98]"
             >
-              Explore My Projects →
+              View My Work →
             </a>
             <a
               href="#contact"
               className="inline-flex items-center justify-center rounded-pill border border-paper/60 px-7 py-3.5 font-body text-base font-semibold text-paper transition-all duration-300 hover:border-paper hover:bg-paper/10 active:scale-[0.98]"
             >
-              Hire Me
+              Let&apos;s Connect
+            </a>
+            <a
+              href="/manav_gupta_resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-pill border border-flame/75 px-6 py-3.5 font-body text-base font-semibold text-paper transition-all duration-300 hover:border-flame hover:bg-flame/15 active:scale-[0.98]"
+            >
+              <svg className="size-4 text-flame flex-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              <span>Resume</span>
             </a>
           </div>
         </div>
@@ -280,7 +291,7 @@ function Statement() {
           </div>
 
           {/* Right section — Four capability cards in 2x2 grid */}
-          <ul className="statement__index grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5" aria-label="Core Capabilities">
+          <ul className="statement__index grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:pt-11 xl:pt-14" aria-label="Core Capabilities">
             {aboutCapabilities.map((card) => (
               <li
                 key={card.title}
