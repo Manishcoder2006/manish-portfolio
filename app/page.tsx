@@ -216,7 +216,7 @@ function Hero() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   className="size-full object-cover object-[center_20%]"
-                  src="/logo-mark.jpg"
+                  src="/logo-mark.webp"
                   width={1024}
                   height={1024}
                   alt="Manav Gupta"
@@ -600,7 +600,7 @@ function Footer() {
         <span className="footer__period relative ml-[.035em] inline-block size-[.19em] align-baseline" aria-hidden="true">
           <span className="footer__aperture absolute bottom-0 left-0 size-(--ap) origin-bottom-left overflow-hidden rounded-pill border border-flame/30 bg-black shadow-[0_0_90px_color-mix(in_srgb,var(--color-flame)_28%,transparent)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="absolute inset-0 m-auto size-[56%] object-contain" src="/logo-mark.jpg" width={1024} height={1024} alt="" loading="lazy" />
+            <img className="absolute inset-0 m-auto size-[56%] object-contain" src="/logo-mark.webp" width={1024} height={1024} alt="" loading="lazy" />
             <span className="footer__tint absolute inset-0 bg-flame opacity-0" />
           </span>
         </span>

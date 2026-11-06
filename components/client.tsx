@@ -42,7 +42,7 @@ export function Navigation({ links }: { links: readonly NavLink[] }) {
     <header id="navigation" data-8b-section="navigation" className="nav pointer-events-none fixed inset-x-0 top-0 z-40 flex items-center gap-3 px-(--space-1) py-3.5 *:pointer-events-auto">
       <a className="inline-flex min-h-12 items-center gap-2 rounded-pill bg-ink px-[14px] font-display text-[length:clamp(17px,5vw,25px)] font-extrabold leading-[1.2] tracking-[-0.05em] text-paper no-underline" href="#hero" aria-label="Manav Gupta, back to the top">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="size-8 flex-none rounded-full object-cover" src="/logo.jpg" width={32} height={32} alt="" />
+        <img className="size-8 flex-none rounded-full object-cover" src="/logo.webp" width={32} height={32} alt="" />
         <span className="pt-[3px]">Manav Gupta<span className="m-dot" aria-hidden="true" /></span>
       </a>
       <nav className="mx-auto rounded-pill bg-ink px-2 text-paper max-[899px]:hidden" aria-label="Main">

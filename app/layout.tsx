@@ -20,6 +20,15 @@ export const metadata: Metadata = {
   title,
   description,
   generator: "8B Templates",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   // No og:image yet (the template's was a placeholder URL), so the card is the small "summary" one.
   openGraph: { type: "website", title, description },
   twitter: { card: "summary" },

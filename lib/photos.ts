@@ -158,7 +158,7 @@ const fit = (photo: Photo, slot: Photo, alt = photo.alt): Photo => ({ ...photo, 
 const { again, services, studio, journal } = raw;
 
 const eventsPhoto: Photo = {
-  src: "/images/events.jpg",
+  src: "/images/events.webp",
   width: 1600,
   height: 900,
   sizes: "(max-width: 767px) 183vw, 52vw",
@@ -168,7 +168,7 @@ const eventsPhoto: Photo = {
 };
 
 const techNewsPhoto: Photo = {
-  src: "/images/tech-news.png",
+  src: "/images/tech-news.webp",
   width: 1600,
   height: 900,
   sizes: "(max-width: 767px) 183vw, 52vw",
@@ -178,7 +178,7 @@ const techNewsPhoto: Photo = {
 };
 
 const developerHelpPhoto: Photo = {
-  src: "/images/developer-help.jpg",
+  src: "/images/developer-help.webp",
   width: 1600,
   height: 900,
   sizes: "(max-width: 767px) 183vw, 52vw",
@@ -188,7 +188,7 @@ const developerHelpPhoto: Photo = {
 };
 
 const techSupportPhoto: Photo = {
-  src: "/images/tech-support.jpg",
+  src: "/images/tech-support.webp",
   width: 1600,
   height: 900,
   sizes: "(max-width: 767px) 183vw, 52vw",
@@ -198,7 +198,7 @@ const techSupportPhoto: Photo = {
 };
 
 const aiPhoto: Photo = {
-  src: "/images/ai.jpg",
+  src: "/images/ai.webp",
   width: 1600,
   height: 900,
   sizes: "(max-width: 767px) 183vw, 52vw",
@@ -208,7 +208,7 @@ const aiPhoto: Photo = {
 };
 
 const aiLlmCardPhoto: Photo = {
-  src: "/images/skills/ai-llm-engineering.png",
+  src: "/images/skills/ai-llm-engineering.webp",
   width: 1122,
   height: 1402,
   sizes: "(max-width: 767px) 91vw, 30vw",
@@ -218,7 +218,7 @@ const aiLlmCardPhoto: Photo = {
 };
 
 const webFullStackCardPhoto: Photo = {
-  src: "/images/skills/web-fullstack-development.png",
+  src: "/images/skills/web-fullstack-development.webp",
   width: 1122,
   height: 1402,
   sizes: "(max-width: 767px) 91vw, 30vw",
@@ -228,7 +228,7 @@ const webFullStackCardPhoto: Photo = {
 };
 
 const mobileAppCardPhoto: Photo = {
-  src: "/images/skills/mobile-app-development.png",
+  src: "/images/skills/mobile-app-development.webp",
   width: 1122,
   height: 1402,
   sizes: "(max-width: 767px) 91vw, 30vw",
@@ -238,7 +238,7 @@ const mobileAppCardPhoto: Photo = {
 };
 
 const mlDeepLearningCardPhoto: Photo = {
-  src: "/images/skills/machine-learning-deep-learning.png",
+  src: "/images/skills/machine-learning-deep-learning.webp",
   width: 1122,
   height: 1402,
   sizes: "(max-width: 767px) 91vw, 30vw",
@@ -248,7 +248,7 @@ const mlDeepLearningCardPhoto: Photo = {
 };
 
 const productBuildingCardPhoto: Photo = {
-  src: "/images/skills/product-building-leadership.png",
+  src: "/images/skills/product-building-leadership.webp",
   width: 1122,
   height: 1402,
   sizes: "(max-width: 767px) 91vw, 30vw",
@@ -258,7 +258,7 @@ const productBuildingCardPhoto: Photo = {
 };
 
 const communicationSpeakingCardPhoto: Photo = {
-  src: "/images/skills/communication-public-speaking.png",
+  src: "/images/skills/communication-public-speaking.webp",
   width: 1122,
   height: 1402,
   sizes: "(max-width: 767px) 91vw, 30vw",
@@ -268,7 +268,7 @@ const communicationSpeakingCardPhoto: Photo = {
 };
 
 const campusNinjaPhoto: Photo = {
-  src: "/projects/campus-ninja.png",
+  src: "/projects/campus-ninja.webp",
   width: 1600,
   height: 1000,
   sizes: "(max-width: 767px) 183vw, 52vw",
@@ -278,7 +278,7 @@ const campusNinjaPhoto: Photo = {
 };
 
 const courseMarketplacePhoto: Photo = {
-  src: "/projects/project-1-v2.png",
+  src: "/projects/project-1-v2.webp",
   width: 1600,
   height: 1000,
   sizes: "(max-width: 767px) 183vw, 52vw",
@@ -288,7 +288,7 @@ const courseMarketplacePhoto: Photo = {
 };
 
 const velocityPhoto: Photo = {
-  src: "/projects/project-4.jpg",
+  src: "/projects/velocity.webp",
   width: 1600,
   height: 1000,
   sizes: "(max-width: 767px) 183vw, 52vw",
@@ -298,7 +298,7 @@ const velocityPhoto: Photo = {
 };
 
 const counsellingHubPhoto: Photo = {
-  src: "/projects/counselling-hub.png",
+  src: "/projects/counselling-hub.webp",
   width: 1600,
   height: 1000,
   sizes: "(max-width: 767px) 183vw, 52vw",
@@ -308,7 +308,7 @@ const counsellingHubPhoto: Photo = {
 };
 
 const codeVedaPhoto: Photo = {
-  src: "/projects/project-2-v2.png",
+  src: "/projects/code-veda.webp",
   width: 1600,
   height: 1000,
   sizes: "(max-width: 767px) 183vw, 52vw",
