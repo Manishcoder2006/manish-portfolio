@@ -131,7 +131,9 @@
   #capabilities.is-deck .service { position: sticky; top: calc(clamp(80px, 12svh, 108px) + var(--i) * 14px); transform-origin: 50% 0; }
 
   #method.is-cycle .method__ring { position: sticky; top: 104px; }
-  @media (min-width: 900px) { #method.is-cycle .method__ring { top: calc(50svh - min(25svh, 21vw)); } }
+  @media (min-width: 1024px) {
+    #method.is-cycle .method__ring { position: relative; top: auto; }
+  }
 
   #journal.is-swap .journal__frame { position: sticky; z-index: 1; top: 80px; }
   #journal.is-swap .journal__shot:first-child { z-index: auto; }

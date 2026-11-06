@@ -3,8 +3,10 @@
 // lib/motion.ts finds its elements through them. Demo text is the template's: replace it with yours.
 import { type ComponentProps, type CSSProperties } from "react";
 import { ContactForm, Motion, Navigation } from "@/components/client";
+import { TechBadge } from "@/components/TechBadge";
 import { photoSrc, photoSrcSet, photos, type Photo as PhotoData } from "@/lib/photos";
 import { contactEmail, contactPhone, contactPhoneRaw, linkedinUrl, githubUrl } from "@/lib/site";
+import { featuredProjects } from "@/lib/data";
 
 // ---------------------------------------------------------------- content
 
@@ -52,64 +54,40 @@ const partners = [
   },
 ];
 
-// Featured projects displayed in the stacking scroll animation.
-// Additional projects can easily be added to this array.
-const featuredProjects = [
-  {
-    id: "fresher-ai",
-    num: "01 / 03",
-    category: "AGENTIC AI PLATFORM",
-    title: "Fresher.AI",
-    line: "An agentic AI career preparation platform with resume analysis, real-time mock interviews, and personalized role-based preparation.",
-    tech: ["React", "FastAPI", "LangGraph", "Groq", "Supabase"],
-    image: "/projects/fresher-preview.png",
-    liveUrl: "https://fresherai.vercel.app",
-    githubUrl: "https://github.com/Manav111111/fresherAI",
-  },
-  {
-    id: "campus-ninja",
-    num: "02 / 03",
-    category: "EDTECH & MOBILE PLATFORM",
-    title: "Campus Ninja",
-    line: "An all-in-one B.Tech learning platform with curated notes, PYQs, interactive roadmaps, and an Android app published on Google Play Store.",
-    tech: ["Next.js", "React Native", "TypeScript", "Tailwind CSS", "Firebase"],
-    image: "/projects/campus-ninja.png",
-    liveUrl: "https://campusninja.vercel.app/",
-    githubUrl: "https://github.com/Manav111111/CampusNinja-Web",
-  },
-  {
-    id: "course-marketplace",
-    num: "03 / 03",
-    category: "FULL-STACK LMS & FINTECH",
-    title: "Course Marketplace",
-    line: "A full-stack learning marketplace with secure authentication, role-based access, course management, and Razorpay checkout.",
-    tech: ["React", "Node.js", "MongoDB", "Razorpay", "Tailwind CSS"],
-    image: "/projects/project-1-v2.png",
-    liveUrl: "https://lms-4-97qt.onrender.com/",
-    githubUrl: "https://github.com/Manav111111/VirtualCourses",
-  },
-];
+// Eight portfolio projects in exact required priority order are imported from @/lib/data.
 
-const steps = [
+const steps: {
+  title: string;
+  company: string;
+  text: string;
+  highlights?: string[];
+}[] = [
   {
     title: "5+ Hackathon Finalist",
     company: "Open-Source Contributor",
     text: "Participated in multiple hackathons, reached finalist stages in 5+ competitions, and contributed to open-source development through collaborative projects.",
   },
   {
-    title: "Ex AI Engineer",
-    company: "at TechXNavaya",
-    text: "Built and developed AI-powered solutions, working with LLMs, RAG pipelines, AI agents, LangGraph, and backend integrations.",
+    title: "AI Engineer",
+    company: "at TECHXNAVAYA Private Limited",
+    text: "Developing AI-powered applications and intelligent agentic workflows using LLMs, RAG pipelines, LangGraph, and modern AI frameworks, with a focus on scalable backend and full-stack integrations.",
   },
   {
     title: "Freelancer",
     company: "at YourDevelopers",
-    text: "Delivering end-to-end web and AI solutions for clients, transforming ideas into functional, scalable digital products.",
+    text: "Delivering end-to-end web development and AI-powered solutions, transforming client requirements into functional, scalable digital products.",
   },
   {
     title: "Co-Founder",
-    company: "at Counselling HB",
-    text: "Co-founded a platform focused on making academic and career counselling more accessible and effective for students.",
+    company: "at Campus Ninja",
+    text: "Co-founded Campus Ninja, an educational and counselling community helping students navigate B.Tech admissions through college guidance, admission updates, cutoff analysis, and personalized counselling. Built and manage a community of 700+ students across multiple IPU college groups, along with a YouTube channel with 300+ subscribers.",
+    highlights: [
+      "Built and manage a community of 700+ students.",
+      "Manage multiple IPU college student groups.",
+      "Help students with B.Tech admissions and counselling.",
+      "Provide college selection guidance and admission updates.",
+      "Built a YouTube audience of 300+ subscribers.",
+    ],
   },
 ];
 
@@ -408,12 +386,7 @@ function Capabilities() {
                 </p>
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="inline-flex items-center rounded-pill border border-ink/15 bg-white/80 px-3 py-1 text-xs sm:text-sm font-medium text-ink shadow-xs"
-                    >
-                      {t}
-                    </span>
+                    <TechBadge key={t} name={t} />
                   ))}
                 </div>
               </div>
@@ -426,8 +399,21 @@ function Capabilities() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-pill bg-gradient-to-r from-amber via-flame to-[#f06018] px-5 sm:px-6 py-2.5 sm:py-3 font-body text-sm sm:text-base font-bold text-ink shadow-[0_4px_18px_rgba(245,135,26,0.35)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_6px_24px_rgba(245,135,26,0.5)] active:scale-[0.98]"
                   >
-                    <span>View Project</span>
+                    <span>{project.id === "velocity" ? "Download APK" : "Live Demo"}</span>
                     <span className="text-base leading-none">↗</span>
+                  </a>
+                )}
+                {project.playStoreUrl && (
+                  <a
+                    href={project.playStoreUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-pill border border-ink/25 bg-transparent px-5 sm:px-6 py-2.5 sm:py-3 font-body text-sm sm:text-base font-semibold text-ink transition-all duration-300 hover:bg-ink/5 hover:border-ink/60 active:scale-[0.98]"
+                  >
+                    <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="m22.018 13.298l-3.919 2.218l-3.515-3.493l3.543-3.521l3.891 2.202a1.49 1.49 0 0 1 0 2.594M1.337.924a1.5 1.5 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087zm12.207 10.065l3.258-3.238L3.45.195a1.47 1.47 0 0 0-.946-.179zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54z"/>
+                    </svg>
+                    <span>Play Store</span>
                   </a>
                 )}
                 {project.githubUrl && (
@@ -449,13 +435,13 @@ function Capabilities() {
             {/* Right Mockup */}
             <div className="relative flex items-center justify-center min-[900px]:h-full">
               <div className="w-full max-w-[560px]">
-                <div className="relative rounded-t-[14px] sm:rounded-t-[18px] border-[5px] sm:border-[7px] border-[#18181b] bg-[#09090b] shadow-[0_15px_35px_rgba(0,0,0,0.35)] overflow-hidden aspect-[16/10]">
+                <div className={`relative rounded-t-[14px] sm:rounded-t-[18px] border-[5px] sm:border-[7px] border-[#18181b] ${project.imageBg || "bg-[#09090b]"} shadow-[0_15px_35px_rgba(0,0,0,0.35)] overflow-hidden aspect-[16/10]`}>
                   <div className="absolute top-1 left-1/2 -translate-x-1/2 z-20 size-1.5 rounded-full bg-[#27272a]" />
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={project.image}
                     alt={`${project.title} preview`}
-                    className="size-full object-cover object-top"
+                    className={`size-full ${project.imageFit === "contain" ? "object-contain" : "object-cover"} ${project.imagePosition || "object-top"}`}
                   />
                 </div>
                 <div className="relative h-2.5 sm:h-3.5 w-[104%] -ml-[2%] rounded-b-md sm:rounded-b-lg bg-gradient-to-r from-[#27272a] via-[#3f3f46] to-[#27272a] border-t border-[#52525b] shadow-xs flex justify-center">
@@ -477,10 +463,10 @@ function Method() {
   return (
     <section id="method" data-8b-section="method" aria-labelledby="method-title" className="relative bg-paper px-(--space-1) py-(--space-2) text-ink">
       <div className="mx-auto max-w-[1360px]">
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-16">
-          {/* Left Column: Heading, Subtitle & Circular Timeline Graphic */}
-          <div className="lg:sticky lg:top-[clamp(80px,12svh,110px)] lg:self-start flex flex-col justify-start">
-            <div>
+        <div className="grid grid-cols-[minmax(0,1fr)_88px] sm:grid-cols-[minmax(0,1fr)_100px] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-x-4 sm:gap-x-6 lg:gap-x-16 items-start">
+          {/* Left Column wrapper (unwrapped on mobile via contents; intact sticky unit on desktop) */}
+          <div className="contents lg:block lg:sticky lg:top-[clamp(80px,12svh,110px)] lg:self-start">
+            <div className="col-span-full mb-8 sm:mb-12 lg:mb-0">
               <h2 className="font-display text-[clamp(38px,5.2vw,72px)] font-extrabold tracking-tight leading-[0.94] text-ink" id="method-title" data-8b-motion="rise">
                 My Professional<br />Journey<Dot />
               </h2>
@@ -490,7 +476,10 @@ function Method() {
             </div>
 
             {/* Circular Timeline Animation Graphic */}
-            <div className="method__ring relative aspect-square w-full max-w-[240px] sm:max-w-[280px] lg:max-w-[320px] mt-8 lg:mt-12" aria-hidden="true">
+            <div
+              className="method__ring relative col-start-2 row-start-2 w-full aspect-square max-w-[88px] sm:max-w-[100px] lg:max-w-[320px] lg:mt-12 lg:col-auto lg:row-auto justify-self-end lg:justify-self-start sticky top-[104px] lg:static z-10"
+              aria-hidden="true"
+            >
               <svg className="absolute inset-0 size-full -rotate-90 overflow-visible" viewBox="0 0 400 400">
                 <circle className="fill-none stroke-ink/14 stroke-[1.5]" cx="200" cy="200" r="170" />
                 <circle className="method__arc fill-none stroke-flame stroke-[5] [stroke-linecap:round]" cx="200" cy="200" r="170" pathLength="1" strokeDasharray="1 1" strokeDashoffset="0" />
@@ -505,9 +494,9 @@ function Method() {
           </div>
 
           {/* Right Column: Four Professional Journey Entries */}
-          <ol className="method__steps grid gap-[clamp(48px,14vh,130px)] lg:pt-[2svh] lg:pb-[14svh]">
+          <ol className="method__steps col-start-1 row-start-2 grid gap-[clamp(48px,14vh,130px)] lg:col-auto lg:row-auto lg:pt-[2svh] lg:pb-[14svh]">
             {steps.map((step) => (
-              <li key={step.title} className="step grid gap-2.5 border-l-[3px] border-flame/80 pl-6 sm:pl-8 transition-opacity duration-300">
+              <li key={step.title} className="step grid gap-2.5 border-l-[3px] border-flame/80 pl-4 sm:pl-8 transition-opacity duration-300">
                 <div>
                   <h3 className="font-display text-2xl sm:text-3xl lg:text-[32px] font-extrabold tracking-tight text-ink leading-snug">
                     {step.title}
@@ -519,6 +508,16 @@ function Method() {
                 <p className="font-body text-base sm:text-lg leading-relaxed text-slate max-w-[34rem]">
                   {step.text}
                 </p>
+                {step.highlights && step.highlights.length > 0 && (
+                  <ul className="mt-2 grid gap-1.5 font-body text-sm sm:text-[15px] text-slate/90 max-w-[34rem]">
+                    {step.highlights.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span className="text-flame font-bold leading-normal">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ol>

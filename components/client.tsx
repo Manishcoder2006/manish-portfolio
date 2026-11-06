@@ -77,102 +77,172 @@ export function Navigation({ links }: { links: readonly NavLink[] }) {
   );
 }
 
-const CONTACT_SUCCESS = "Thank you! Your message has been sent successfully. I'll get back to you shortly.";
+const APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbxhzKWajNEDaf2i3uBtw5bycSea3dKJtkuDa3w8FAX9TqxO3GNEsad7_EUEDkB5Qgwe/exec";
+
+const CONTACT_SUCCESS = "Your message has been sent successfully!";
 const CONTACT_ERROR = "Please provide your name, a valid email address, and a message.";
 const CONTACT_SENDING = "Sending message…";
-const CONTACT_FAILED = `Sorry, your message could not be delivered. Please try again or email directly to ${contactEmail}.`;
+const CONTACT_FAILED = "Unable to send your message. Please try again.";
 
 /**
- * Contact form with server-side /api/contact integration delivering directly to
- * manavgupta236@gmail.com with validation, spam prevention and loading states.
+ * Contact form connected directly to Google Apps Script Web App backend via a hidden iframe
+ * with postMessage response validation and zero third-party dependencies.
  */
 export function ContactForm() {
   const [status, setStatus] = useState("");
   const [sending, setSending] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const submittedRef = useRef(false);
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (sending) return;
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      // Validate that message is of type portfolio-contact-result
+      if (!event.data || typeof event.data !== "object") return;
+      if (event.data.type !== "portfolio-contact-result") return;
 
-    const form = event.currentTarget;
-    if (!form.checkValidity()) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+
+      submittedRef.current = false;
+      setSending(false);
+
+      const isSuccess = event.data.status === "success" || event.data.success === true;
+      if (isSuccess) {
+        setStatus(CONTACT_SUCCESS);
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+      } else {
+        setStatus(CONTACT_FAILED);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  const onIframeLoad = () => {
+    // Only handle if an active submission was initiated
+    if (!submittedRef.current) return;
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+
+    submittedRef.current = false;
+    setSending(false);
+    setStatus(CONTACT_SUCCESS);
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+  };
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (sending) {
+      event.preventDefault();
+      return;
+    }
+
+    const form = formRef.current || event.currentTarget;
+    const formData = new FormData(form);
+
+    // Honeypot check: drop silently if filled
+    const honeypot = formData.get("website");
+    if (honeypot) {
+      event.preventDefault();
+      return;
+    }
+
+    // Validation
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!name || !email || !emailRegex.test(email) || !message) {
+      event.preventDefault();
       setStatus(CONTACT_ERROR);
       form.querySelector<HTMLElement>(":invalid")?.focus();
       return;
     }
 
-    const formData = new FormData(form);
-    if (formData.get("_honey")) return;
-
-    const payload = {
-      name: String(formData.get("name") || "").trim(),
-      email: String(formData.get("email") || "").trim(),
-      subject: String(formData.get("subject") || "").trim() || "Project Collaboration",
-      topic: String(formData.get("topic") || "").trim() || "General Inquiry",
-      message: String(formData.get("message") || "").trim(),
-      _honey: String(formData.get("_honey") || ""),
-    };
-
-    if (!payload.name || !payload.email || !payload.message) {
-      setStatus(CONTACT_ERROR);
-      return;
-    }
-
     setSending(true);
+    submittedRef.current = true;
     setStatus(CONTACT_SENDING);
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await response.json().catch(() => ({}));
-
-      if (!response.ok || !data.success) {
-        throw new Error(data.error || "Failed to deliver message");
+    // Fallback safety timeout: 35s max waiting time
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      if (submittedRef.current) {
+        submittedRef.current = false;
+        setSending(false);
+        setStatus(CONTACT_FAILED);
       }
+      timeoutRef.current = null;
+    }, 35000);
 
-      setStatus(CONTACT_SUCCESS);
-      form.reset();
-    } catch (err) {
-      console.error("Submission failed:", err);
-      setStatus(CONTACT_FAILED);
-    } finally {
-      setSending(false);
-    }
+    // Form natively posts to APPS_SCRIPT_URL targeting portfolio-contact-iframe
   };
 
   const label = "grid gap-1 text-slate text-xs sm:text-sm font-semibold";
   return (
-    <form className="contact__form rounded-[28px] sm:rounded-[36px] bg-white grid gap-[20px] p-[clamp(24px,3.5vw,44px)] shadow-[0_20px_60px_rgba(0,0,0,0.06)]" noValidate onSubmit={onSubmit}>
-      <div className="grid gap-[20px] min-[640px]:grid-cols-2">
-        <label className={label}>Your name<input className="m-field text-ink" name="name" type="text" autoComplete="name" required /></label>
-        <label className={label}>Email<input className="m-field text-ink" name="email" type="email" autoComplete="email" required /></label>
-      </div>
-      <div className="grid gap-[20px] min-[640px]:grid-cols-2">
-        <label className={label}>Subject<input className="m-field text-ink" name="subject" type="text" placeholder="" /></label>
-        <label className={label}>
-          What are you reaching out for?
-          <select className="m-field text-ink cursor-pointer" name="topic" defaultValue="Project Collaboration">
-            <option value="Project Collaboration">Project Collaboration</option>
-            <option value="Freelance Work">Freelance Work</option>
-            <option value="AI & LLM Solutions">AI & LLM Solutions</option>
-            <option value="Full-time Role">Full-time Role</option>
-            <option value="General Inquiry">General Inquiry</option>
-          </select>
-        </label>
-      </div>
-      <label className={label}>Your message<textarea className="m-field text-ink" name="message" rows={3} required /></label>
-      <input className="hidden" type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-      <div className="flex flex-wrap items-center gap-4 pt-1.5">
-        <button className="m-btn disabled:opacity-60" type="submit" disabled={sending}>
-          <span className="m-btn__label">{sending ? "Sending…" : "Send message"}</span>
-        </button>
-        <p className="m-text text-ink text-sm" role="status" aria-live="polite" data-success={CONTACT_SUCCESS} data-error={CONTACT_ERROR}>{status}</p>
-      </div>
-    </form>
+    <>
+      <iframe
+        ref={iframeRef}
+        id="portfolio-contact-iframe"
+        name="portfolio-contact-iframe"
+        title="Google Apps Script submission target"
+        className="hidden"
+        style={{ display: "none" }}
+        aria-hidden="true"
+        tabIndex={-1}
+        onLoad={onIframeLoad}
+      />
+      <form
+        ref={formRef}
+        action={APPS_SCRIPT_URL}
+        method="POST"
+        target="portfolio-contact-iframe"
+        className="contact__form rounded-[28px] sm:rounded-[36px] bg-white grid gap-[20px] p-[clamp(24px,3.5vw,44px)] shadow-[0_20px_60px_rgba(0,0,0,0.06)]"
+        noValidate
+        onSubmit={onSubmit}
+      >
+        <div className="grid gap-[20px] min-[640px]:grid-cols-2">
+          <label className={label}>Your name<input className="m-field text-ink" name="name" type="text" autoComplete="name" required /></label>
+          <label className={label}>Email<input className="m-field text-ink" name="email" type="email" autoComplete="email" required /></label>
+        </div>
+        <div className="grid gap-[20px] min-[640px]:grid-cols-2">
+          <label className={label}>Subject<input className="m-field text-ink" name="subject" type="text" placeholder="" /></label>
+          <label className={label}>
+            What are you reaching out for?
+            <select className="m-field text-ink cursor-pointer" name="purpose" defaultValue="Project Collaboration">
+              <option value="Project Collaboration">Project Collaboration</option>
+              <option value="Freelance Work">Freelance Work</option>
+              <option value="AI & LLM Solutions">AI & LLM Solutions</option>
+              <option value="Full-time Role">Full-time Role</option>
+              <option value="General Inquiry">General Inquiry</option>
+            </select>
+          </label>
+        </div>
+        <label className={label}>Your message<textarea className="m-field text-ink" name="message" rows={3} required /></label>
+        <input className="hidden" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: "none" }} />
+        <div className="flex flex-wrap items-center gap-4 pt-1.5">
+          <button className="m-btn disabled:opacity-60" type="submit" disabled={sending}>
+            <span className="m-btn__label">{sending ? "Sending…" : "Send message"}</span>
+          </button>
+          <p className="m-text text-ink text-sm" role="status" aria-live="polite" data-success={CONTACT_SUCCESS} data-error={CONTACT_ERROR}>{status}</p>
+        </div>
+      </form>
+    </>
   );
 }
 

@@ -1,59 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { Icon } from "@iconify/react";
+import { projects, techIconMap, type Project } from "@/lib/data";
 
-export interface ShowcaseProject {
-  id: string;
-  num: string;
-  title: string;
-  category: string;
-  description: string;
-  tech: string[];
-  image: string;
-  liveUrl?: string;
-  githubUrl?: string;
-}
+export type ShowcaseProject = Project;
+export const defaultProjects: ShowcaseProject[] = projects;
 
-export const defaultProjects: ShowcaseProject[] = [
-  {
-    id: "fresher-ai",
-    num: "01 / 03",
-    title: "Fresher.AI",
-    category: "AGENTIC AI PLATFORM",
-    description: "An agentic AI career preparation platform with resume analysis, mock interviews, and role-based preparation.",
-    tech: ["React", "FastAPI", "LangGraph", "Groq", "Supabase"],
-    image: "/projects/fresher-preview.png",
-    liveUrl: "https://fresherai.vercel.app",
-    githubUrl: "https://github.com/Manav111111/fresherAI",
-  },
-  {
-    id: "campus-ninja",
-    num: "02 / 03",
-    title: "Campus Ninja",
-    category: "EDTECH & MOBILE PLATFORM",
-    description: "An all-in-one B.Tech learning platform with notes, PYQs, roadmaps, and an Android app published on Google Play Store.",
-    tech: ["Next.js", "React Native", "TypeScript", "Tailwind CSS", "Firebase"],
-    image: "/projects/campus-ninja.png",
-    liveUrl: "https://campusninja.vercel.app/",
-    githubUrl: "https://github.com/Manav111111/CampusNinja-Web",
-  },
-  {
-    id: "course-marketplace",
-    num: "03 / 03",
-    title: "Course Marketplace",
-    category: "E-LEARNING & FINTECH",
-    description: "A full-stack learning marketplace with secure authentication, role-based access, course management, and Razorpay checkout.",
-    tech: ["React", "Node.js", "MongoDB", "Razorpay", "Tailwind CSS"],
-    image: "/projects/project-1-v2.png",
-    liveUrl: "https://lms-4-97qt.onrender.com/",
-    githubUrl: "https://github.com/Manav111111/VirtualCourses",
-  },
-];
-
-export function ProjectsShowcase({ projects = defaultProjects }: { projects?: ShowcaseProject[] }) {
+export function ProjectsShowcase({ projects: items = defaultProjects }: { projects?: ShowcaseProject[] }) {
   const [index, setIndex] = useState(0);
-  const total = projects.length;
-  const current = projects[index];
+  const total = items.length;
+  const current = items[index];
 
   const prev = () => setIndex((i) => (i === 0 ? total - 1 : i - 1));
   const next = () => setIndex((i) => (i === total - 1 ? 0 : i + 1));
@@ -95,7 +52,7 @@ export function ProjectsShowcase({ projects = defaultProjects }: { projects?: Sh
                 {current.num}
               </span>
               <div className="flex items-center gap-2">
-                {projects.map((_, i) => (
+                {items.map((_, i) => (
                   <button
                     key={i}
                     type="button"
@@ -119,16 +76,20 @@ export function ProjectsShowcase({ projects = defaultProjects }: { projects?: Sh
               {current.description}
             </p>
 
-            {/* Tech tags */}
+            {/* Tech tags with official logos */}
             <div className="flex flex-wrap gap-2 mb-8">
-              {current.tech.map((t) => (
-                <span
-                  key={t}
-                  className="inline-flex items-center rounded-pill border border-ink/15 bg-white/70 px-3.5 py-1 text-xs sm:text-sm font-medium text-ink shadow-xs"
-                >
-                  {t}
-                </span>
-              ))}
+              {current.tech.map((t) => {
+                const icon = techIconMap[t];
+                return (
+                  <span
+                    key={t}
+                    className="inline-flex items-center gap-1.5 rounded-pill border border-ink/15 bg-white/70 px-3.5 py-1 text-xs sm:text-sm font-medium text-ink shadow-xs"
+                  >
+                    {icon && <Icon icon={icon} className="size-3.5 sm:size-4 shrink-0" aria-hidden="true" />}
+                    <span>{t}</span>
+                  </span>
+                );
+              })}
             </div>
 
             {/* CTA Buttons */}
@@ -140,8 +101,19 @@ export function ProjectsShowcase({ projects = defaultProjects }: { projects?: Sh
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-pill bg-gradient-to-r from-amber via-flame to-[#f06018] px-6 sm:px-7 py-3 sm:py-3.5 font-body text-sm sm:text-base font-bold text-ink shadow-[0_4px_20px_rgba(245,135,26,0.35)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_6px_28px_rgba(245,135,26,0.5)] active:scale-[0.98]"
                 >
-                  <span>View Project</span>
+                  <span>{current.id === "velocity" ? "Download APK" : "Live Demo"}</span>
                   <span className="text-lg leading-none">↗</span>
+                </a>
+              )}
+              {current.playStoreUrl && (
+                <a
+                  href={current.playStoreUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-pill border border-ink/30 bg-transparent px-6 sm:px-7 py-3 sm:py-3.5 font-body text-sm sm:text-base font-semibold text-ink transition-all duration-300 hover:bg-ink/5 hover:border-ink/60 active:scale-[0.98]"
+                >
+                  <Icon icon="logos:google-play-icon" className="size-4 shrink-0" aria-hidden="true" />
+                  <span>Play Store</span>
                 </a>
               )}
               {current.githubUrl && (
@@ -164,7 +136,7 @@ export function ProjectsShowcase({ projects = defaultProjects }: { projects?: Sh
           <div className="relative flex items-center justify-center">
             <div className="w-full max-w-[620px]">
               {/* Laptop Screen Bezel */}
-              <div className="relative rounded-t-[16px] sm:rounded-t-[20px] border-[6px] sm:border-[8px] border-[#18181b] bg-[#09090b] shadow-[0_15px_40px_rgba(0,0,0,0.4)] overflow-hidden aspect-[16/10]">
+              <div className={`relative rounded-t-[16px] sm:rounded-t-[20px] border-[6px] sm:border-[8px] border-[#18181b] ${current.imageBg || "bg-[#09090b]"} shadow-[0_15px_40px_rgba(0,0,0,0.4)] overflow-hidden aspect-[16/10]`}>
                 {/* Camera Notch */}
                 <div className="absolute top-1 left-1/2 -translate-x-1/2 z-20 size-1.5 rounded-full bg-[#27272a]" />
                 {/* Project Screenshot / Visual */}
@@ -172,7 +144,7 @@ export function ProjectsShowcase({ projects = defaultProjects }: { projects?: Sh
                 <img
                   src={current.image}
                   alt={`${current.title} preview`}
-                  className="size-full object-cover object-top transition-opacity duration-300"
+                  className={`size-full ${current.imageFit === "contain" ? "object-contain" : "object-cover"} ${current.imagePosition || "object-top"} transition-opacity duration-300`}
                 />
               </div>
               {/* Laptop Base */}
