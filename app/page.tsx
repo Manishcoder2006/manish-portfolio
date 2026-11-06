@@ -365,12 +365,12 @@ function Capabilities() {
         {featuredProjects.map((project) => (
           <li
             key={project.id}
-            className="service m-surface relative grid grid-cols-1 gap-8 overflow-hidden rounded-[28px] sm:rounded-[36px] bg-[#f8f5ee] border border-ink/8 p-[clamp(24px,3.2vw,44px)] shadow-[0_-18px_50px_color-mix(in_srgb,var(--color-ink)_45%,transparent)] min-[900px]:h-[min(64svh,580px)] min-[900px]:min-h-[440px] min-[900px]:grid-cols-[minmax(0,1.05fr)_minmax(0,1.25fr)] min-[900px]:gap-[clamp(28px,3.5vw,52px)] text-ink"
+            className="service m-surface relative grid grid-cols-1 gap-6 sm:gap-8 rounded-[28px] sm:rounded-[36px] bg-[#f8f5ee] border border-ink/8 p-[clamp(20px,2.5vw,36px)] shadow-[0_-18px_50px_color-mix(in_srgb,var(--color-ink)_45%,transparent)] min-[900px]:min-h-[min(70svh,620px)] min-[900px]:grid-cols-[minmax(0,1.05fr)_minmax(0,1.25fr)] min-[900px]:gap-[clamp(24px,3.2vw,48px)] text-ink"
           >
             {/* Left Content */}
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col justify-between gap-4">
               <div>
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-2.5 sm:mb-3">
                   <span className="font-mono text-sm sm:text-base font-bold text-flame tracking-wider">
                     {project.num}
                   </span>
@@ -378,20 +378,20 @@ function Capabilities() {
                     {project.category}
                   </span>
                 </div>
-                <h3 className="m-text-4 text-ink font-display font-extrabold tracking-tight mb-3">
+                <h3 className="m-text-4 text-ink font-display font-extrabold tracking-tight mb-2 sm:mb-2.5">
                   {project.title}
                 </h3>
-                <p className="m-text-5 max-w-lg text-slate leading-relaxed mb-6">
+                <p className="m-text-5 max-w-lg text-slate text-sm sm:text-base leading-relaxed mb-3.5 sm:mb-4">
                   {project.line}
                 </p>
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5">
                   {project.tech.map((t) => (
                     <TechBadge key={t} name={t} />
                   ))}
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-1 pb-2">
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}

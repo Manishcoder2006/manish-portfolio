@@ -97,27 +97,33 @@ export function ContactForm() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const submittedRef = useRef(false);
 
+  const markSuccess = () => {
+    if (!submittedRef.current) return;
+    submittedRef.current = false;
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setSending(false);
+    setStatus(CONTACT_SUCCESS);
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+  };
+
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       // Validate that message is of type portfolio-contact-result
       if (!event.data || typeof event.data !== "object") return;
       if (event.data.type !== "portfolio-contact-result") return;
 
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-
-      submittedRef.current = false;
-      setSending(false);
-
       const isSuccess = event.data.status === "success" || event.data.success === true;
       if (isSuccess) {
-        setStatus(CONTACT_SUCCESS);
-        if (formRef.current) {
-          formRef.current.reset();
-        }
+        markSuccess();
       } else {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        submittedRef.current = false;
+        setSending(false);
         setStatus(CONTACT_FAILED);
       }
     };
@@ -130,20 +136,7 @@ export function ContactForm() {
   }, []);
 
   const onIframeLoad = () => {
-    // Only handle if an active submission was initiated
-    if (!submittedRef.current) return;
-
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
-    submittedRef.current = false;
-    setSending(false);
-    setStatus(CONTACT_SUCCESS);
-    if (formRef.current) {
-      formRef.current.reset();
-    }
+    markSuccess();
   };
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -179,7 +172,24 @@ export function ContactForm() {
     submittedRef.current = true;
     setStatus(CONTACT_SENDING);
 
-    // Fallback safety timeout: 35s max waiting time
+    // Dual-dispatch: also send via direct fetch (no-cors) to guarantee prompt delivery and instant success confirmation
+    try {
+      fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData,
+      })
+        .then(() => {
+          markSuccess();
+        })
+        .catch(() => {
+          // Fallback to iframe response or safety timeout
+        });
+    } catch {
+      // Fallback to iframe response
+    }
+
+    // Fallback safety timeout: 15s max waiting time
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
       if (submittedRef.current) {
@@ -188,9 +198,9 @@ export function ContactForm() {
         setStatus(CONTACT_FAILED);
       }
       timeoutRef.current = null;
-    }, 35000);
+    }, 15000);
 
-    // Form natively posts to APPS_SCRIPT_URL targeting portfolio-contact-iframe
+    // Form also natively posts to APPS_SCRIPT_URL targeting portfolio-contact-iframe
   };
 
   const label = "grid gap-1 text-slate text-xs sm:text-sm font-semibold";
@@ -201,8 +211,7 @@ export function ContactForm() {
         id="portfolio-contact-iframe"
         name="portfolio-contact-iframe"
         title="Google Apps Script submission target"
-        className="hidden"
-        style={{ display: "none" }}
+        className="absolute -top-[9999px] -left-[9999px] w-px h-px opacity-0 pointer-events-none"
         aria-hidden="true"
         tabIndex={-1}
         onLoad={onIframeLoad}

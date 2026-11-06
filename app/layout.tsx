@@ -22,12 +22,13 @@ export const metadata: Metadata = {
   generator: "8B Templates",
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", type: "image/png" },
+      { url: "/icon.png?v=3", sizes: "any", type: "image/png" },
+      { url: "/favicon.ico?v=3", sizes: "any" },
     ],
     apple: [
-      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png?v=3", sizes: "180x180", type: "image/png" },
     ],
+    shortcut: "/favicon.ico?v=3",
   },
   // No og:image yet (the template's was a placeholder URL), so the card is the small "summary" one.
   openGraph: { type: "website", title, description },
@@ -37,6 +38,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${gabarito.variable} ${onest.variable}`}>
+      <head>
+        <link rel="icon" href="/icon.png?v=3" type="image/png" sizes="any" />
+        <link rel="shortcut icon" href="/favicon.ico?v=3" />
+        <link rel="apple-touch-icon" href="/apple-icon.png?v=3" />
+      </head>
       <body className="m-text">{children}</body>
     </html>
   );
