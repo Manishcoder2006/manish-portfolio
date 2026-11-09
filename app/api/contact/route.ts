@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 // In-memory rate limiting to prevent spam / duplicate submissions
 const submissionHistory = new Map<string, number>();
 
-const DESTINATION_EMAIL = process.env.ADMIN_EMAIL || "manavgupta236@gmail.com";
+const DESTINATION_EMAIL = process.env.ADMIN_EMAIL || "m09167358@gmail.com";
 
 export async function POST(request: Request) {
   try {

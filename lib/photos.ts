@@ -237,16 +237,6 @@ const mobileAppCardPhoto: Photo = {
   lazy: true,
 };
 
-const mlDeepLearningCardPhoto: Photo = {
-  src: "/images/skills/machine-learning-deep-learning.webp",
-  width: 1122,
-  height: 1402,
-  sizes: "(max-width: 767px) 91vw, 30vw",
-  bg: "#0a0713",
-  alt: "Machine Learning & Deep Learning - Intelligent models using Python, PyTorch, TensorFlow, and NLP",
-  lazy: true,
-};
-
 const productBuildingCardPhoto: Photo = {
   src: "/images/skills/product-building-leadership.webp",
   width: 1122,
@@ -267,72 +257,15 @@ const communicationSpeakingCardPhoto: Photo = {
   lazy: true,
 };
 
-const campusNinjaPhoto: Photo = {
-  src: "/projects/campus-ninja.webp",
-  width: 1600,
-  height: 1000,
-  sizes: "(max-width: 767px) 183vw, 52vw",
-  bg: "#101614",
-  alt: "Campus Ninja - All-in-one B.Tech learning platform with Android app",
-  lazy: true,
-};
-
-const courseMarketplacePhoto: Photo = {
-  src: "/projects/project-1-v2.webp",
-  width: 1600,
-  height: 1000,
-  sizes: "(max-width: 767px) 183vw, 52vw",
-  bg: "#18120d",
-  alt: "Course Marketplace - E-learning marketplace with Razorpay payments",
-  lazy: true,
-};
-
-const velocityPhoto: Photo = {
-  src: "/projects/velocity.webp",
-  width: 1600,
-  height: 1000,
-  sizes: "(max-width: 767px) 183vw, 52vw",
-  bg: "#14110e",
-  alt: "Velocity - Fast React Native quick commerce grocery app",
-  lazy: true,
-};
-
-const counsellingHubPhoto: Photo = {
-  src: "/projects/counselling-hub.webp",
-  width: 1600,
-  height: 1000,
-  sizes: "(max-width: 767px) 183vw, 52vw",
-  bg: "#111417",
-  alt: "IPU Counselling Hub - Admissions cutoff analytics and predictor",
-  lazy: true,
-};
-
-const codeVedaPhoto: Photo = {
-  src: "/projects/code-veda.webp",
-  width: 1600,
-  height: 1000,
-  sizes: "(max-width: 767px) 183vw, 52vw",
-  bg: "#120e0c",
-  alt: "Code Veda 2.0 - Immersive 3D WebGL hackathon platform",
-  lazy: true,
-};
-
 export const photos = {
   hero: raw.hero,
-  // Five featured portfolio projects
-  work: [
-    campusNinjaPhoto,
-    courseMarketplacePhoto,
-    velocityPhoto,
-    counsellingHubPhoto,
-    codeVedaPhoto,
-  ],
-  // Six new generated expertise cards
+  // Featured portfolio projects
+  work: [],
+  // Five expertise cards
   again: [
     aiLlmCardPhoto,
     webFullStackCardPhoto,
     mobileAppCardPhoto,
-    mlDeepLearningCardPhoto,
     productBuildingCardPhoto,
     communicationSpeakingCardPhoto,
   ],

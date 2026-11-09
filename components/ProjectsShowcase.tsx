@@ -101,7 +101,7 @@ export function ProjectsShowcase({ projects: items = defaultProjects }: { projec
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-pill bg-gradient-to-r from-amber via-flame to-[#f06018] px-6 sm:px-7 py-3 sm:py-3.5 font-body text-sm sm:text-base font-bold text-ink shadow-[0_4px_20px_rgba(245,135,26,0.35)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_6px_28px_rgba(245,135,26,0.5)] active:scale-[0.98]"
                 >
-                  <span>{current.id === "velocity" ? "Download APK" : "Live Demo"}</span>
+                  <span>Live Demo</span>
                   <span className="text-lg leading-none">↗</span>
                 </a>
               )}

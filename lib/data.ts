@@ -43,181 +43,33 @@ export const techIconMap: Record<string, string> = {
 
 export const projects: Project[] = [
   {
-    id: "fresher-ai",
-    num: "01 / 08",
-    category: "AI & AGENTIC SYSTEMS",
-    title: "Fresher.AI",
+    id: "skillbridge-india",
+    num: "01 / 02",
+    category: "AGENTIC AI & CAREER PLATFORM",
+    title: "SkillBridge India",
     tagline:
-      "An agentic AI career platform featuring multi-agent mock interviews, ATS resume analysis, and intelligent career preparation powered by RAG.",
+      "An agentic AI career preparation platform delivering personalized mock interviews, ATS resume analysis, and adaptive interview workflows.",
     line:
-      "An agentic AI career platform featuring multi-agent mock interviews, ATS resume analysis, and intelligent career preparation powered by RAG.",
+      "An agentic AI career preparation platform delivering personalized mock interviews, ATS resume analysis, and adaptive interview workflows.",
     description:
-      "An agentic AI career platform featuring multi-agent mock interviews, ATS resume analysis, and intelligent career preparation powered by RAG.",
+      "Built an Agentic AI platform delivering personalized mock interviews, ATS resume analysis, and AI-generated career roadmaps for job-seeking students. Designed adaptive AI interview workflows with LangGraph and Groq, evaluating responses in real time and generating personalized feedback through a multi-agent evaluation pipeline.",
     keyFeatures: [
-      "Multi-agent AI interview system powered by LangGraph.",
-      "AI-powered mock interviews.",
-      "ATS-based resume analysis.",
-      "Intelligent career preparation.",
-      "RAG-based knowledge retrieval.",
-      "LLM inference using Groq.",
+      "Agentic AI platform delivering personalized mock interviews.",
+      "ATS resume analysis and AI-generated career roadmaps.",
+      "Adaptive interview workflows powered by LangGraph and Groq.",
+      "Real-time response evaluation and personalized feedback pipeline.",
     ],
-    tech: ["React.js", "Python", "FastAPI", "LangGraph", "LangChain", "Groq", "Supabase", "Qdrant"],
+    tech: ["React", "FastAPI", "LangGraph", "Groq", "Python"],
     image: "/projects/fresher-preview.webp",
     imageFit: "contain",
     imagePosition: "object-center",
     imageBg: "bg-[#09090b]",
-    liveUrl: "https://fresherai-silk.vercel.app/",
-    githubUrl: "https://github.com/Manav111111/FresherInterview",
-  },
-  {
-    id: "ai-workspace",
-    num: "02 / 08",
-    category: "AGENTIC AI & ENTERPRISE AUTOMATION",
-    title: "AI Workspace",
-    tagline:
-      "An enterprise AI employee platform where businesses create intelligent AI workers that learn from uploaded documents and answer knowledge-based questions.",
-    line:
-      "An enterprise AI employee platform where businesses create intelligent AI workers that learn from uploaded documents and answer knowledge-based questions.",
-    description:
-      "An enterprise AI employee platform where businesses create intelligent AI workers that learn from uploaded documents and answer knowledge-based questions.",
-    keyFeatures: [
-      "Create and configure custom AI employees.",
-      "Upload documents and organizational knowledge.",
-      "Knowledge-based question answering.",
-      "Intelligent AI-powered responses using uploaded data.",
-      "Enterprise-oriented AI employee management.",
-      "Multi-tenant AI infrastructure.",
-      "AI employee deployment and management.",
-    ],
-    tech: ["Next.js", "FastAPI", "Python", "Qdrant", "Redis", "TypeScript"],
-    image: "/projects/ai-workspace.webp",
-    imageFit: "contain",
-    imagePosition: "object-center",
-    imageBg: "bg-[#09090b]",
-    liveUrl: "https://ai-workspace-kjkj.vercel.app/",
-    githubUrl: "https://github.com/Manav111111/AI-Workspace",
-  },
-  {
-    id: "campus-ninja",
-    num: "03 / 08",
-    category: "EDTECH & MOBILE PLATFORM",
-    title: "Campus Ninja",
-    tagline:
-      "An all-in-one student platform offering semester notes, PYQs, academic resources, learning roadmaps, and a dedicated Android application.",
-    line:
-      "An all-in-one student platform offering semester notes, PYQs, academic resources, learning roadmaps, and a dedicated Android application.",
-    description:
-      "An all-in-one student platform offering semester notes, PYQs, academic resources, learning roadmaps, and a dedicated Android application.",
-    keyFeatures: [
-      "Android application available on Google Play.",
-      "Academic resources and learning materials.",
-      "Student-focused educational platform.",
-      "Actively maintained live product.",
-    ],
-    tech: ["Next.js", "React Native", "TypeScript", "Tailwind CSS"],
-    image: "/projects/campus-ninja.webp",
-    imageFit: "contain",
-    imagePosition: "object-center",
-    imageBg: "bg-[#eceef2]",
-    liveUrl: "https://campusninja.vercel.app/",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.campusninja.app",
-    githubUrl: "https://github.com/Manav111111/CampusNinja-Web",
-  },
-  {
-    id: "course-marketplace",
-    num: "04 / 08",
-    category: "E-LEARNING & FINTECH",
-    title: "Course Marketplace",
-    tagline:
-      "A full-stack learning marketplace connecting students and creators through secure authentication, course management, and integrated Razorpay payments.",
-    line:
-      "A full-stack learning marketplace connecting students and creators through secure authentication, course management, and integrated Razorpay payments.",
-    description:
-      "A full-stack learning marketplace connecting students and creators through secure authentication, course management, and integrated Razorpay payments.",
-    keyFeatures: [
-      "Automated Razorpay checkout.",
-      "Role-based access for students and creators.",
-    ],
-    tech: ["React", "Node.js", "MongoDB", "Razorpay"],
-    image: "/projects/project-1-v2.webp",
-    imageFit: "contain",
-    imagePosition: "object-center",
-    imageBg: "bg-[#0d0d10]",
-    liveUrl: "https://lms-4-97qt.onrender.com/",
-    githubUrl: "https://github.com/Manav111111/VirtualCourses",
-  },
-  {
-    id: "velocity",
-    num: "05 / 08",
-    category: "QUICK COMMERCE & MOBILE",
-    title: "Velocity",
-    tagline:
-      "A React Native quick-commerce application offering grocery browsing, product discovery, cart management, and a smooth mobile shopping experience.",
-    line:
-      "A React Native quick-commerce application offering grocery browsing, product discovery, cart management, and a smooth mobile shopping experience.",
-    description:
-      "A React Native quick-commerce application offering grocery browsing, product discovery, cart management, and a smooth mobile shopping experience.",
-    keyFeatures: [
-      "Smooth 60 FPS performance.",
-      "Android mobile application.",
-    ],
-    tech: ["React Native", "Firebase", "Node.js"],
-    image: "/projects/velocity.webp",
-    imageFit: "contain",
-    imagePosition: "object-center",
-    imageBg: "bg-[#09090b]",
-    liveUrl: "https://drive.google.com/file/d/1bl7GVgoPACLKjtlEC4qps9QuAsV-1FBD/view",
-    githubUrl: "https://github.com/Manav111111/velocity",
-  },
-  {
-    id: "counselling-hub",
-    num: "06 / 08",
-    category: "ADMISSIONS & EDTECH",
-    title: "IPU Counselling Hub",
-    tagline:
-      "A student counselling platform providing IPU admission guidance, round-wise cutoffs, college comparisons, and intelligent B.Tech college predictions.",
-    line:
-      "A student counselling platform providing IPU admission guidance, round-wise cutoffs, college comparisons, and intelligent B.Tech college predictions.",
-    description:
-      "A student counselling platform providing IPU admission guidance, round-wise cutoffs, college comparisons, and intelligent B.Tech college predictions.",
-    keyFeatures: [
-      "1,000+ monthly users.",
-      "IPU college cutoff analytics.",
-    ],
-    tech: ["Next.js", "Firebase", "React", "Tailwind CSS"],
-    image: "/projects/counselling-hub.webp",
-    imageFit: "contain",
-    imagePosition: "object-center",
-    imageBg: "bg-[#f4f7fc]",
-    liveUrl: "https://councelling-delta.vercel.app/",
-    githubUrl: "https://github.com/Manav111111/Councelling",
-  },
-  {
-    id: "code-veda",
-    num: "07 / 08",
-    category: "WEB3 & HACKATHON",
-    title: "Code Veda 2.0",
-    tagline:
-      "An immersive hackathon event website featuring interactive Three.js visuals, event schedules, sponsors, and developer registration.",
-    line:
-      "An immersive hackathon event website featuring interactive Three.js visuals, event schedules, sponsors, and developer registration.",
-    description:
-      "An immersive hackathon event website featuring interactive Three.js visuals, event schedules, sponsors, and developer registration.",
-    keyFeatures: [
-      "3D WebGL visuals.",
-      "1,500+ event impressions.",
-    ],
-    tech: ["React", "Three.js", "Vite", "Figma"],
-    image: "/projects/code-veda.webp",
-    imageFit: "contain",
-    imagePosition: "object-center",
-    imageBg: "bg-[#08020f]",
-    liveUrl: "https://codeveda2.vercel.app/",
-    githubUrl: "https://github.com/AyushChoudhary6/Code-Veda-2.0",
+    liveUrl: "https://skillbridge-india-eight.vercel.app",
+    githubUrl: "https://github.com/Manishcoder2006",
   },
   {
     id: "shoe-store",
-    num: "08 / 08",
+    num: "02 / 02",
     category: "LUXURY E-COMMERCE",
     title: "Premium Shoe Store",
     tagline:
@@ -236,7 +88,7 @@ export const projects: Project[] = [
     imagePosition: "object-center",
     imageBg: "bg-[#060a08]",
     liveUrl: "https://bloom-app-9246e.web.app/",
-    githubUrl: "https://github.com/Manav111111/bloom-app",
+    githubUrl: "https://github.com/Manishcoder2006",
   },
 ];
 

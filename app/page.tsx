@@ -20,7 +20,7 @@ const navLinks = [
 
 
 
-// Six core expertise areas representing Manav's skills.
+// Five core expertise areas representing Manish's skills.
 const partners = [
   {
     tag: "AI",
@@ -38,11 +38,6 @@ const partners = [
     line: "Creating cross-platform mobile applications using React Native, Expo, Firebase and modern mobile technologies.",
   },
   {
-    tag: "ML",
-    name: "Machine Learning & Deep Learning",
-    line: "Exploring intelligent models using Python, PyTorch, TensorFlow, Scikit-learn, NLP and Computer Vision.",
-  },
-  {
     tag: "Product",
     name: "Product Building & Leadership",
     line: "Turning ideas into working products through hackathons, collaboration, problem-solving and end-to-end product development.",
@@ -54,7 +49,7 @@ const partners = [
   },
 ];
 
-// Eight portfolio projects in exact required priority order are imported from @/lib/data.
+// Portfolio projects imported from @/lib/data.
 
 const steps: {
   title: string;
@@ -63,30 +58,19 @@ const steps: {
   highlights?: string[];
 }[] = [
   {
-    title: "5+ Hackathon Finalist",
-    company: "Open-Source Contributor",
-    text: "Participated in multiple hackathons, reached finalist stages in 5+ competitions, and contributed to open-source development through collaborative projects.",
-  },
-  {
-    title: "AI Engineer",
-    company: "at TECHXNAVAYA Private Limited",
-    text: "Developing AI-powered applications and intelligent agentic workflows using LLMs, RAG pipelines, LangGraph, and modern AI frameworks, with a focus on scalable backend and full-stack integrations.",
-  },
-  {
     title: "Freelancer",
     company: "at YourDevelopers",
     text: "Delivering end-to-end web development and AI-powered solutions, transforming client requirements into functional, scalable digital products.",
   },
   {
-    title: "Co-Founder",
+    title: "AI Engineering and Management Intern",
     company: "at Campus Ninja",
-    text: "Co-founded Campus Ninja, an educational and counselling community helping students navigate B.Tech admissions through college guidance, admission updates, cutoff analysis, and personalized counselling. Built and manage a community of 700+ students across multiple IPU college groups, along with a YouTube channel with 300+ subscribers.",
+    text: "AI Engineering and Management Intern at Campus Ninja (AI Agency — Chatbots & Agent Integrations). Engineered context-aware RAG pipelines, built intelligent LLM workflows, and deployed production-ready AI solutions and chatbots across multiple client projects.",
     highlights: [
-      "Built and manage a community of 700+ students.",
-      "Manage multiple IPU college student groups.",
-      "Help students with B.Tech admissions and counselling.",
-      "Provide college selection guidance and admission updates.",
-      "Built a YouTube audience of 300+ subscribers.",
+      "Engineered RAG pipelines with context-aware retrieval, chunking, and embeddings for higher accuracy.",
+      "Integrated LLMs, OpenAI APIs, LangChain/LangGraph, Python, and FastAPI to build intelligent AI workflows.",
+      "Built AI chatbots and agents integrated with third-party APIs, databases, and external tools.",
+      "Developed and deployed production-ready AI solutions across multiple client projects.",
     ],
   },
 ];
@@ -117,9 +101,9 @@ const aboutCapabilities = [
 
 // Verified statistics for the About section.
 const aboutStats = [
-  { value: "10+", label: "Projects Built" },
-  { value: "5K+", label: "Users Impacted" },
-  { value: "3+", label: "Years of Experience" },
+  { value: "1+", label: "Projects Built" },
+  { value: "1K+", label: "Users Impacted" },
+  { value: "1+", label: "Years of Experience" },
 ] as const;
 
 // The community WhatsApp link used in contact and footer.
@@ -175,7 +159,7 @@ function Hero() {
             AI Engineer · Full-Stack Developer · Freelancer
           </div>
           <h1 id="hero-title" className="font-display text-[clamp(40px,5.6vw,78px)] font-extrabold tracking-[-0.04em] leading-[1.08] text-paper">
-            Hey, I&apos;m <span className="hero__word inline-block text-flame">Manav Gupta.</span>
+            Hey, I&apos;m <span className="hero__word inline-block text-flame">Manish Gupta.</span>
           </h1>
           <p className="max-w-[540px] font-body text-base sm:text-lg md:text-[19px] font-normal leading-[1.65] text-paper/85">
             I build AI-powered web and mobile products, and also work as a freelancer helping individuals and startups turn their ideas into real solutions.
@@ -194,7 +178,7 @@ function Hero() {
               Let&apos;s Connect
             </a>
             <a
-              href="/manav_gupta_resume.pdf"
+              href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-pill border border-flame/75 px-6 py-3.5 font-body text-base font-semibold text-paper transition-all duration-300 hover:border-flame hover:bg-flame/15 active:scale-[0.98]"
@@ -219,7 +203,7 @@ function Hero() {
                   src="/logo-mark.webp"
                   width={1024}
                   height={1024}
-                  alt="Manav Gupta"
+                  alt="Manish Gupta"
                   fetchPriority="high"
                 />
                 <span className="hero__tint pointer-events-none absolute inset-0 bg-flame opacity-0" />
@@ -322,7 +306,7 @@ function Again() {
       <div className="again__stage relative px-(--space-1) pt-[calc(var(--space-2)*0.7)] pb-(--space-2)">
         <div className={`again__head ${head}`}>
           <h2 className="m-text-3" id="again-title">Built around what I do best<Dot /></h2>
-          <p className="m-text-5 max-w-[27rem] text-fog">Six core areas of expertise spanning AI systems, intelligent workflows, and full-stack engineering.</p>
+          <p className="m-text-5 max-w-[27rem] text-fog">Five core areas of expertise spanning AI systems, intelligent workflows, and full-stack engineering.</p>
         </div>
         <div className="again__swing mt-[clamp(40px,7vh,72px)]">
           <ul className="again__wheel grid grid-cols-[minmax(0,1fr)] gap-4 min-[640px]:grid-cols-2 min-[1000px]:grid-cols-3">
@@ -399,7 +383,7 @@ function Capabilities() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-pill bg-gradient-to-r from-amber via-flame to-[#f06018] px-5 sm:px-6 py-2.5 sm:py-3 font-body text-sm sm:text-base font-bold text-ink shadow-[0_4px_18px_rgba(245,135,26,0.35)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_6px_24px_rgba(245,135,26,0.5)] active:scale-[0.98]"
                   >
-                    <span>{project.id === "velocity" ? "Download APK" : "Live Demo"}</span>
+                    <span>Live Demo</span>
                     <span className="text-base leading-none">↗</span>
                   </a>
                 )}
@@ -484,7 +468,7 @@ function Method() {
                 <circle className="fill-none stroke-ink/14 stroke-[1.5]" cx="200" cy="200" r="170" />
                 <circle className="method__arc fill-none stroke-flame stroke-[5] [stroke-linecap:round]" cx="200" cy="200" r="170" pathLength="1" strokeDasharray="1 1" strokeDashoffset="0" />
               </svg>
-              {[[0, -1], [1, 0], [0, 1], [-1, 0]].map(([x, y]) => (
+              {[[0, -1], [0, 1]].map(([x, y]) => (
                 <span key={`${x},${y}`} className="method__station absolute top-[calc(50%+42.5%*var(--y))] left-[calc(50%+42.5%*var(--x))] -mt-[4.5%] -ml-[4.5%] size-[9%] rounded-pill bg-flame" style={{ "--x": x, "--y": y } as CSSProperties} />
               ))}
               <span className="method__arm absolute inset-[7.5%]">
@@ -493,7 +477,7 @@ function Method() {
             </div>
           </div>
 
-          {/* Right Column: Four Professional Journey Entries */}
+          {/* Right Column: Professional Journey Entries */}
           <ol className="method__steps col-start-1 row-start-2 grid gap-[clamp(48px,14vh,130px)] lg:col-auto lg:row-auto lg:pt-[2svh] lg:pb-[14svh]">
             {steps.map((step) => (
               <li key={step.title} className="step grid gap-2.5 border-l-[3px] border-flame/80 pl-4 sm:pl-8 transition-opacity duration-300">

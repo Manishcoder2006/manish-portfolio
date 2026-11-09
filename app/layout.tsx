@@ -12,9 +12,9 @@ import "./globals.css";
 const gabarito = Gabarito({ subsets: ["latin"], variable: "--font-gabarito", display: "swap" });
 const onest = Onest({ subsets: ["latin"], variable: "--font-onest", display: "swap" });
 
-const title = "Manav Gupta — AI Engineer & Full-Stack Developer";
+const title = "Manish Gupta — AI Engineer & Full-Stack Developer";
 const description =
-  "Portfolio of Manav Gupta — AI Engineer & Full-Stack Developer building intelligent, production-ready products across LLMs, RAG, scalable web and mobile applications.";
+  "Portfolio of Manish Gupta — AI Engineer & Full-Stack Developer building intelligent, production-ready products across LLMs, RAG, scalable web and mobile applications.";
 
 export const metadata: Metadata = {
   title,

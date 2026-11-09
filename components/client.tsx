@@ -40,10 +40,10 @@ export function Navigation({ links }: { links: readonly NavLink[] }) {
 
   return (
     <header id="navigation" data-8b-section="navigation" className="nav pointer-events-none fixed inset-x-0 top-0 z-40 flex items-center gap-3 px-(--space-1) py-3.5 *:pointer-events-auto">
-      <a className="inline-flex min-h-12 items-center gap-2 rounded-pill bg-ink px-[14px] font-display text-[length:clamp(17px,5vw,25px)] font-extrabold leading-[1.2] tracking-[-0.05em] text-paper no-underline" href="#hero" aria-label="Manav Gupta, back to the top">
+      <a className="inline-flex min-h-12 items-center gap-2 rounded-pill bg-ink px-[14px] font-display text-[length:clamp(17px,5vw,25px)] font-extrabold leading-[1.2] tracking-[-0.05em] text-paper no-underline" href="#hero" aria-label="Manish Gupta, back to the top">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="size-8 flex-none rounded-full object-cover" src="/logo.webp" width={32} height={32} alt="" />
-        <span className="pt-[3px]">Manav Gupta<span className="m-dot" aria-hidden="true" /></span>
+        <img className="size-8 flex-none rounded-full object-cover" src="/logo.webp" width={32} height={32} alt="Manish Gupta" />
+        <span className="pt-[3px]">Manish Gupta<span className="m-dot" aria-hidden="true" /></span>
       </a>
       <nav className="mx-auto rounded-pill bg-ink px-2 text-paper max-[899px]:hidden" aria-label="Main">
         <ul className="flex">
@@ -52,10 +52,21 @@ export function Navigation({ links }: { links: readonly NavLink[] }) {
           ))}
         </ul>
       </nav>
-      <a className="m-btn shadow-[0_0_0_2px_var(--color-ink)] max-[899px]:hidden" href="#contact"><span className="m-btn__label">Get in touch</span></a>
-      <button ref={toggle} className="m-btn-2 ml-auto min-[900px]:hidden" type="button" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(true)}>
-        <span className="m-btn__label">Menu</span>
-      </button>
+      <div className="ml-auto flex items-center gap-3">
+        <a
+          className="group inline-flex min-h-12 items-center gap-2 rounded-pill bg-paper px-4 sm:px-5 font-body text-sm sm:text-base font-bold text-ink shadow-[0_2px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-[1.03] hover:bg-flame hover:text-white active:scale-[0.98]"
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View Resume"
+        >
+          <svg className="size-4 text-flame group-hover:text-white flex-none transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.4} aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+          </svg>
+          <span>Resume</span>
+        </a>
+        <a className="m-btn shadow-[0_0_0_2px_var(--color-ink)] max-[899px]:hidden" href="#contact"><span className="m-btn__label">Get in touch</span></a>
+      </div>
       <div ref={menu} className="menu fixed inset-0 z-60 grid grid-rows-[auto_1fr_auto] overflow-y-auto bg-ink px-(--space-1) pt-3.5 pb-8 text-paper" id="menu" role="dialog" aria-modal="true" aria-label="Menu" data-lenis-prevent hidden={!open} onKeyDown={onKeyDown}>
         <div className="flex justify-end">
           <button ref={close} className="m-icon" type="button" aria-label="Close the menu" onClick={() => setOpen(false)}>
@@ -77,154 +88,103 @@ export function Navigation({ links }: { links: readonly NavLink[] }) {
   );
 }
 
-const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxhzKWajNEDaf2i3uBtw5bycSea3dKJtkuDa3w8FAX9TqxO3GNEsad7_EUEDkB5Qgwe/exec";
-
 const CONTACT_SUCCESS = "Your message has been sent successfully!";
 const CONTACT_ERROR = "Please provide your name, a valid email address, and a message.";
 const CONTACT_SENDING = "Sending message…";
-const CONTACT_FAILED = "Unable to send your message. Please try again.";
+const CONTACT_FAILED = "Unable to send your message. Please try again or email directly.";
 
 /**
- * Contact form connected directly to Google Apps Script Web App backend via a hidden iframe
- * with postMessage response validation and zero third-party dependencies.
+ * Contact form delivering messages directly to m09167358@gmail.com via /api/contact
+ * with automatic fallback.
  */
 export function ContactForm() {
   const [status, setStatus] = useState("");
   const [sending, setSending] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const submittedRef = useRef(false);
 
-  const markSuccess = () => {
-    if (!submittedRef.current) return;
-    submittedRef.current = false;
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-    setSending(false);
-    setStatus(CONTACT_SUCCESS);
-    if (formRef.current) {
-      formRef.current.reset();
-    }
-  };
-
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      // Validate that message is of type portfolio-contact-result
-      if (!event.data || typeof event.data !== "object") return;
-      if (event.data.type !== "portfolio-contact-result") return;
-
-      const isSuccess = event.data.status === "success" || event.data.success === true;
-      if (isSuccess) {
-        markSuccess();
-      } else {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        submittedRef.current = false;
-        setSending(false);
-        setStatus(CONTACT_FAILED);
-      }
-    };
-
-    window.addEventListener("message", handleMessage);
-    return () => {
-      window.removeEventListener("message", handleMessage);
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, []);
-
-  const onIframeLoad = () => {
-    markSuccess();
-  };
-
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (sending) {
-      event.preventDefault();
-      return;
-    }
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (sending) return;
 
     const form = formRef.current || event.currentTarget;
     const formData = new FormData(form);
 
     // Honeypot check: drop silently if filled
     const honeypot = formData.get("website");
-    if (honeypot) {
-      event.preventDefault();
-      return;
-    }
+    if (honeypot) return;
 
     // Validation
     const name = String(formData.get("name") || "").trim();
     const email = String(formData.get("email") || "").trim();
+    const subject = String(formData.get("subject") || "").trim();
+    const purpose = String(formData.get("purpose") || "").trim();
     const message = String(formData.get("message") || "").trim();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!name || !email || !emailRegex.test(email) || !message) {
-      event.preventDefault();
       setStatus(CONTACT_ERROR);
       form.querySelector<HTMLElement>(":invalid")?.focus();
       return;
     }
 
     setSending(true);
-    submittedRef.current = true;
     setStatus(CONTACT_SENDING);
 
-    // Dual-dispatch: also send via direct fetch (no-cors) to guarantee prompt delivery and instant success confirmation
     try {
-      fetch(APPS_SCRIPT_URL, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        mode: "no-cors",
-        body: formData,
-      })
-        .then(() => {
-          markSuccess();
-        })
-        .catch(() => {
-          // Fallback to iframe response or safety timeout
-        });
-    } catch {
-      // Fallback to iframe response
-    }
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          subject: subject || "Portfolio Message",
+          topic: purpose || "Project Collaboration",
+          message,
+        }),
+      });
 
-    // Fallback safety timeout: 15s max waiting time
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      if (submittedRef.current) {
-        submittedRef.current = false;
+      if (res.ok) {
         setSending(false);
-        setStatus(CONTACT_FAILED);
-      }
-      timeoutRef.current = null;
-    }, 15000);
+        setStatus(CONTACT_SUCCESS);
+        form.reset();
+      } else {
+        // Fallback directly to FormSubmit for m09167358@gmail.com
+        const fallbackRes = await fetch("https://formsubmit.co/ajax/m09167358@gmail.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            subject: `Portfolio Message: ${subject || "General Inquiry"}`,
+            topic: purpose,
+            message,
+            _captcha: "false",
+          }),
+        }).catch(() => null);
 
-    // Form also natively posts to APPS_SCRIPT_URL targeting portfolio-contact-iframe
+        if (fallbackRes && fallbackRes.ok) {
+          setSending(false);
+          setStatus(CONTACT_SUCCESS);
+          form.reset();
+        } else {
+          setSending(false);
+          setStatus(CONTACT_FAILED);
+        }
+      }
+    } catch {
+      setSending(false);
+      setStatus(CONTACT_FAILED);
+    }
   };
 
   const label = "grid gap-1 text-slate text-xs sm:text-sm font-semibold";
   return (
-    <>
-      <iframe
-        ref={iframeRef}
-        id="portfolio-contact-iframe"
-        name="portfolio-contact-iframe"
-        title="Google Apps Script submission target"
-        className="absolute -top-[9999px] -left-[9999px] w-px h-px opacity-0 pointer-events-none"
-        aria-hidden="true"
-        tabIndex={-1}
-        onLoad={onIframeLoad}
-      />
-      <form
-        ref={formRef}
-        action={APPS_SCRIPT_URL}
-        method="POST"
-        target="portfolio-contact-iframe"
-        className="contact__form rounded-[28px] sm:rounded-[36px] bg-white grid gap-[20px] p-[clamp(24px,3.5vw,44px)] shadow-[0_20px_60px_rgba(0,0,0,0.06)]"
-        noValidate
-        onSubmit={onSubmit}
-      >
+    <form
+      ref={formRef}
+      className="contact__form rounded-[28px] sm:rounded-[36px] bg-white grid gap-[20px] p-[clamp(24px,3.5vw,44px)] shadow-[0_20px_60px_rgba(0,0,0,0.06)]"
+      noValidate
+      onSubmit={onSubmit}
+    >
         <div className="grid gap-[20px] min-[640px]:grid-cols-2">
           <label className={label}>Your name<input className="m-field text-ink" name="name" type="text" autoComplete="name" required /></label>
           <label className={label}>Email<input className="m-field text-ink" name="email" type="email" autoComplete="email" required /></label>
@@ -251,7 +211,6 @@ export function ContactForm() {
           <p className="m-text text-ink text-sm" role="status" aria-live="polite" data-success={CONTACT_SUCCESS} data-error={CONTACT_ERROR}>{status}</p>
         </div>
       </form>
-    </>
   );
 }
 
